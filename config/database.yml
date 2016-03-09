@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: twintter_api_development
+
+test:
+  <<: *default
+  database: twintter_api_test
+
+production:
+  <<: *default
+  database: twintter_api_production
+  username: twintter_api
+  password: <%= ENV['TWINTTER_API_DATABASE_PASSWORD'] %>
