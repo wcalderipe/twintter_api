@@ -6,6 +6,7 @@ gem 'rails-api'
 gem 'pg'
 gem 'responders', '~> 2.0'
 gem 'active_model_serializers'
+gem 'devise'
 
 group :development, :test do
   gem 'byebug'
