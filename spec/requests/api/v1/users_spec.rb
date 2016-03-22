@@ -2,7 +2,41 @@ require 'rails_helper'
 
 RSpec.describe 'API V1 Users', type: :request do
   describe 'GET #index' do
+    let!(:users_collection) { create_list(:user, 2) }
 
+    before :each do
+      get '/api/v1/users'
+    end
+
+    it 'should respond with 200' do
+        expect(response.status).to eq(200)
+    end
+
+    it 'should render users json collection' do
+      expect(json).to eq(
+        users: [
+          {
+            id: users_collection[0].id,
+            username: users_collection[0].username,
+            email: users_collection[0].email,
+            first_name: users_collection[0].first_name,
+            last_name: users_collection[0].last_name
+          },
+          {
+            id: users_collection[1].id,
+            username: users_collection[1].username,
+            email: users_collection[1].email,
+            first_name: users_collection[1].first_name,
+            last_name: users_collection[1].last_name
+          }
+        ],
+        meta: {
+          total: 2,
+          page: nil,
+          per_page: 5
+        }
+      )
+    end
   end
 
   describe 'GET #show' do

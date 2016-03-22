@@ -1,5 +1,6 @@
 class Api::V1::UsersController < Api::V1::BaseController
   def index
+    render_collection(User, ::V1::UserSerializer)
   end
 
   def show
