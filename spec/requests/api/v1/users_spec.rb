@@ -1,12 +1,66 @@
 require 'rails_helper'
 
 RSpec.describe 'API V1 Users', type: :request do
+  describe 'GET #index' do
+
+  end
+
+  describe 'GET #show' do
+    context 'when record is found' do
+      let!(:user) { create(:user) }
+
+      before :each do
+        get "/api/v1/users/#{user.id}"
+      end
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should render user json' do
+        expect(json).to eq(
+          user: {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            first_name: user.first_name,
+            last_name: user.last_name
+          }
+        )
+      end
+    end
+
+    context 'when record is not found' do
+      before :each do
+        get '/api/v1/users/-1'
+      end
+
+      it 'should respond with 404' do
+        expect(response.status).to eq(404)
+      end
+
+      it 'should render json errors' do
+        expect(json).to eq(
+          error: {
+            message: "Couldn't find User with 'id'=-1",
+            class: 'ActiveRecord::RecordNotFound',
+            status: 404
+          }
+        )
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'with valid attributes' do
       let!(:user_attributes) { attributes_for(:user) }
 
       before :each do
         post '/api/v1/users', { user: user_attributes }
+      end
+
+      it 'should respond with 201' do
+        expect(response.status).to eq(201)
       end
 
       it 'should render user json' do
@@ -19,10 +73,6 @@ RSpec.describe 'API V1 Users', type: :request do
             last_name: user_attributes[:last_name]
           }
         )
-      end
-
-      it 'should respond with 201' do
-        expect(response.status).to eq(201)
       end
     end
 
