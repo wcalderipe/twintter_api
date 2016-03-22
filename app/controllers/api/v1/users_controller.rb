@@ -16,6 +16,14 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def update
+    if user.update(user_params)
+      render json: user, status: 200, serializer: ::V1::UserSerializer
+    else
+      fail ModelValidationError.new(user.errors)
+    end
+  end
+
   private
 
     def user

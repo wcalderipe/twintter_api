@@ -218,4 +218,54 @@ RSpec.describe 'API V1 Users', type: :request do
       end
     end
   end
+
+  describe 'PUT #update' do
+    let!(:user) { create(:user) }
+
+    before :each do
+      put "/api/v1/users/#{user.id}", { user: user_attributes }
+    end
+
+    context 'with valid attributes' do
+      let!(:user_attributes) { attributes_for(:user) }
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should render user json' do
+        expect(json).to eq(
+          user: {
+            id: user.id,
+            username: user_attributes[:username],
+            email: user_attributes[:email],
+            first_name: user_attributes[:first_name],
+            last_name: user_attributes[:last_name]
+          }
+        )
+      end
+    end
+
+    context 'with invalid attributes' do
+      context 'wrong password confirmation' do
+        let(:user_attributes) { attributes_for(:user, password_confirmation: '123') }
+
+        it 'should respond with 422' do
+          expect(response.status).to eq(422)
+        end
+
+        it 'should render json errors' do
+          expect(json).to eq(
+            error: {
+              message: {
+                password_confirmation: ["doesn't match Password"]
+              },
+              class: 'ModelValidationError',
+              status: 422
+            }
+          )
+        end
+      end
+    end
+  end
 end
