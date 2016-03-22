@@ -148,6 +148,7 @@ GEM
       thread_safe (~> 0.1)
     warden (1.2.3)
       rack (>= 1.0)
+    will_paginate (3.0.7)
 
 PLATFORMS
   ruby
@@ -168,6 +169,7 @@ DEPENDENCIES
   rspec-rails (~> 3.0)
   shoulda-matchers (~> 3.0)
   simplecov
+  will_paginate (~> 3.0.6)
 
 BUNDLED WITH
    1.10.6

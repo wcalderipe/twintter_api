@@ -16,6 +16,8 @@ SimpleCov.start do
     add_filter '/spec/'
 end
 
+WillPaginate.per_page = 5
+
 RSpec.configure do |config|
   config.include Request::JsonHelper, :type => :request
 

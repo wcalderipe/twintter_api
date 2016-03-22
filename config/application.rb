@@ -7,5 +7,7 @@ Bundler.require(*Rails.groups)
 module TwintterApi
   class Application < Rails::Application
     config.active_record.raise_in_transactional_callbacks = true
+
+    WillPaginate.per_page = 30
   end
 end
