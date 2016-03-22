@@ -18,6 +18,5 @@ class User < ActiveRecord::Base
   validates :username, :first_name, :last_name, presence: true
   validates :username, uniqueness: true
 
-  devise :database_authenticatable, :registerable,
-         :recoverable,  :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :validatable
 end
