@@ -11,6 +11,16 @@ class ApplicationController < ActionController::Base
     }, status: e.status
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |e|
+    render json: {
+      error: {
+        message: parse_error_message(e.message),
+        class: e.class.name,
+        status: 404
+      }
+    }, status: 404
+  end
+
   private
 
     def parse_error_message(message)
