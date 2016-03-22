@@ -24,6 +24,11 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    user.destroy
+    head 204
+  end
+
   private
 
     def user

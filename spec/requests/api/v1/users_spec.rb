@@ -268,4 +268,20 @@ RSpec.describe 'API V1 Users', type: :request do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    let!(:user) { create(:user) }
+
+    before :each do
+      delete "/api/v1/users/#{user.id}"
+    end
+
+    it 'should respond with 204' do
+      expect(response.status).to eq(204)
+    end
+
+    it 'should delete user record' do
+      expect { raise user.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end
