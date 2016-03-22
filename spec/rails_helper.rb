@@ -16,14 +16,9 @@ SimpleCov.start do
     add_filter '/spec/'
 end
 
-Shoulda::Matchers.configure do |config|
-  config.integrate do |with|
-    with.test_framework :rspec
-    with.library :rails
-  end
-end
-
 RSpec.configure do |config|
+  config.include Request::JsonHelper, :type => :request
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
@@ -40,5 +35,12 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       e.run
     end
+  end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
 end
