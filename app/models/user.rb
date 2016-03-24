@@ -19,4 +19,6 @@ class User < ActiveRecord::Base
   validates :username, uniqueness: true
 
   devise :database_authenticatable, :registerable, :recoverable, :validatable
+
+  enum role: [:guest, :user, :admin]
 end

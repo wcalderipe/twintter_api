@@ -12,6 +12,7 @@ RSpec.describe User, type: :model do
     it { should respond_to(:email) }
     it { should respond_to(:password) }
     it { should respond_to(:reset_password_token) }
+    it { should respond_to(:role) }
   end
 
   context 'validations' do
@@ -22,5 +23,11 @@ RSpec.describe User, type: :model do
   end
 
   context 'associations' do
+  end
+
+  describe 'role' do
+    it 'should be guest as default role' do
+      expect(user.role).to eq('guest')
+    end
   end
 end
