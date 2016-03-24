@@ -10,6 +10,21 @@ class ApplicationPolicy
     Pundit.policy_scope!(user, record.class)
   end
 
+  def index?
+    true
+  end
+
+  def show?
+    true
+  end
+
+  protected 
+
+    def create_permissions?
+      return false if user.guest?
+      true
+    end
+
   class Scope
     attr_reader :user, :scope
 
