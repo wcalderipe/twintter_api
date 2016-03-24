@@ -78,6 +78,8 @@ GEM
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
     pg (0.18.4)
+    pundit (1.0.1)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -162,6 +164,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0)
   ffaker
   pg
+  pundit
   rails (= 4.2.4)
   rails-api
   rake (< 11.0)
