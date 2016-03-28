@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
+  DEFAULT_ACTIONS = [:index, :show, :create, :update, :destroy]
+
   root to: 'errors#routing'
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      resources :users, only: [:index, :show, :create, :update, :destroy] do
-        resources :posts, only: [:index, :show, :create, :update, :destroy]
+      resources :users, only: DEFAULT_ACTIONS do
+        resources :posts, only: DEFAULT_ACTIONS
+      end
+
+      resources :posts, only: [] do
+        resources :comments, only: DEFAULT_ACTIONS
       end
     end
   end
