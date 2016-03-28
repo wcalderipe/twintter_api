@@ -3,7 +3,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def index
     authorize User
-    render_collection(User, ::V1::UserSerializer)
+    render_collection(users, ::V1::UserSerializer)
   end
 
   def show
@@ -40,6 +40,10 @@ class Api::V1::UsersController < Api::V1::BaseController
 
     def user
       @user ||= User.find(params[:id])
+    end
+
+    def users
+      User.paginate(:page => params[:page])
     end
 
     def user_params
