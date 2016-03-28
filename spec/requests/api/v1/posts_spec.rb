@@ -89,5 +89,59 @@ RSpec.describe 'API V1 Posts', type: :request do
       end
     end
   end
+
+  describe 'POST #create' do
+    context 'with valid attributes' do
+      let!(:post_attributes) { { text: FFaker::Lorem.word } }
+
+      before :each do
+        post "/api/v1/users/#{user.id}/posts", { post: post_attributes },
+          'HTTP_AUTHORIZATION' => current_user_credentials
+      end
+
+      it 'should respond with 201' do
+        expect(response.status).to eq(201)
+      end
+
+      it 'should render user json' do
+        expect(json).to eq(
+          post: {
+            id: Post.last.id,
+            text: post_attributes[:text],
+            user: {
+              id: user.id
+            }
+          }
+        )
+      end
+    end
+
+    context 'with invalid attributes' do
+      let(:post_attributes) { { text: '' } }
+
+      before :each do
+        post "/api/v1/users/#{user.id}/posts", { post: post_attributes },
+          'HTTP_AUTHORIZATION' => current_user_credentials
+      end
+
+      context 'missing text' do
+        it 'should respond with 422' do
+          expect(response.status).to eq(422)
+        end
+
+        it 'should render json errors' do
+          expect(json).to eq(
+            error: {
+              message: {
+                text: ["can't be blank"]
+              },
+              class: 'ModelValidationError',
+              status: 422
+            }
+          )
+        end
+      end
+    end
+  end
 end
 
