@@ -8,7 +8,7 @@ describe PostPolicy do
 
   subject { PostPolicy }
 
-  permissions :index? do
+  permissions :index?, :show? do
     it 'grants access to guests' do
       expect(subject).to permit(guest)
     end

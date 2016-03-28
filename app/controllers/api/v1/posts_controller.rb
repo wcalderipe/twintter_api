@@ -4,7 +4,16 @@ class Api::V1::PostsController < Api::V1::BaseController
     render_collection(posts, ::V1::PostSerializer)
   end
 
+  def show
+    authorize post
+    render json: post, status: 200, serializer: ::V1::PostSerializer
+  end
+
   protected
+
+    def post
+      @post ||= Post.find_by!(id: params[:id], user_id: params[:user_id])
+    end
 
     def posts
       Post.where(user_id: params[:user_id]).paginate(:page => params[:page])
