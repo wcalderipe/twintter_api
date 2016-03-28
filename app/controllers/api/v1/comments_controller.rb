@@ -9,6 +9,16 @@ class Api::V1::CommentsController < Api::V1::BaseController
     render json: comment, status: 200, serializer: ::V1::CommentSerializer
   end
 
+  def create
+    comment = Comment.new(comment_params)
+    authorize comment
+    if comment.save
+      render json: comment, status: 201, serializer: ::V1::CommentSerializer
+    else
+      fail ModelValidationError.new(comment.errors)
+    end
+  end
+
   protected
 
     def comment
@@ -18,5 +28,9 @@ class Api::V1::CommentsController < Api::V1::BaseController
     def comments
       Comment.where(post_id: params[:post_id]).paginate(:page => params[:page])
         .order('created_at DESC')
+    end
+
+    def comment_params
+      params.require(:comment).permit(:text).merge({ post_id: params[:post_id] })
     end
 end

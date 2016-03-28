@@ -20,7 +20,7 @@ class ApplicationPolicy
 
   protected 
 
-    def create_permissions?
+    def grant_create?
       return false if user.guest?
       true
     end

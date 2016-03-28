@@ -21,4 +21,20 @@ describe CommentPolicy do
       expect(subject).to permit(admin)
     end
   end
+
+  permissions :create? do
+    let!(:comment) { build(:comment) }
+
+    it 'grants access to users' do
+      expect(subject).to permit(user, comment)
+    end
+
+    it 'grants access to admins' do
+      expect(subject).to permit(admin, comment)
+    end
+
+    it 'denies access to guests' do
+      expect(subject).not_to permit(guest, comment)
+    end
+  end
 end

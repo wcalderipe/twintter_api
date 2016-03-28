@@ -1,7 +1,5 @@
 class CommentPolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope
-    end
+  def create?
+    grant_create?
   end
 end
