@@ -5,11 +5,11 @@ RSpec.describe 'API V1 Users', type: :request do
     let!(:users_collection) { create_list(:user, 2) }
 
     before :each do
-      get '/api/v1/users'
+      get '/api/v1/users', {}, 'HTTP_AUTHORIZATION' => current_user_credentials
     end
 
     it 'should respond with 200' do
-        expect(response.status).to eq(200)
+      expect(response.status).to eq(200)
     end
 
     it 'should render users json collection' do
@@ -28,10 +28,17 @@ RSpec.describe 'API V1 Users', type: :request do
             email: users_collection[1].email,
             first_name: users_collection[1].first_name,
             last_name: users_collection[1].last_name
+          },
+          {
+            id: current_user.id,
+            username: current_user.username,
+            email: current_user.email,
+            first_name: current_user.first_name,
+            last_name: current_user.last_name
           }
         ],
         meta: {
-          total: 2,
+          total: 3,
           page: nil,
           per_page: 5
         }
@@ -44,7 +51,7 @@ RSpec.describe 'API V1 Users', type: :request do
       let!(:user) { create(:user) }
 
       before :each do
-        get "/api/v1/users/#{user.id}"
+        get "/api/v1/users/#{user.id}", {}, 'HTTP_AUTHORIZATION' => current_user_credentials
       end
 
       it 'should respond with 200' do
@@ -66,7 +73,7 @@ RSpec.describe 'API V1 Users', type: :request do
 
     context 'when record is not found' do
       before :each do
-        get '/api/v1/users/-1'
+        get '/api/v1/users/-1', {}, 'HTTP_AUTHORIZATION' => current_user_credentials
       end
 
       it 'should respond with 404' do
@@ -90,7 +97,8 @@ RSpec.describe 'API V1 Users', type: :request do
       let!(:user_attributes) { attributes_for(:user) }
 
       before :each do
-        post '/api/v1/users', { user: user_attributes }
+        post '/api/v1/users', { user: user_attributes },
+          'HTTP_AUTHORIZATION' => current_user_credentials
       end
 
       it 'should respond with 201' do
@@ -114,7 +122,8 @@ RSpec.describe 'API V1 Users', type: :request do
       let(:user_attributes) { attributes_for(:user) }
 
       before :each do
-        post '/api/v1/users', { user: user_attributes }
+        post '/api/v1/users', { user: user_attributes },
+          'HTTP_AUTHORIZATION' => current_user_credentials
       end
 
       context 'wrong password confirmation' do
@@ -223,7 +232,8 @@ RSpec.describe 'API V1 Users', type: :request do
     let!(:user) { create(:user) }
 
     before :each do
-      put "/api/v1/users/#{user.id}", { user: user_attributes }
+      put "/api/v1/users/#{user.id}", { user: user_attributes },
+        'HTTP_AUTHORIZATION' => current_user_credentials
     end
 
     context 'with valid attributes' do
@@ -273,7 +283,8 @@ RSpec.describe 'API V1 Users', type: :request do
     let!(:user) { create(:user) }
 
     before :each do
-      delete "/api/v1/users/#{user.id}"
+      delete "/api/v1/users/#{user.id}", {},
+        'HTTP_AUTHORIZATION' => current_user_credentials
     end
 
     it 'should respond with 204' do

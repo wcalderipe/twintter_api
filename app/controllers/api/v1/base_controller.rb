@@ -1,4 +1,7 @@
 class Api::V1::BaseController < ApplicationController
+  include ::HttpAuthenticable
+
+  before_filter :authenticate_with_basic_auth!
 
   protected
 
