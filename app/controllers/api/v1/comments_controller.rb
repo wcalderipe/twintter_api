@@ -19,6 +19,15 @@ class Api::V1::CommentsController < Api::V1::BaseController
     end
   end
 
+  def update
+    authorize comment
+    if comment.update(comment_params)
+      render json: comment, status: 200, serializer: ::V1::CommentSerializer
+    else
+      fail ModelValidationError.new(comment.errors)
+    end
+  end
+
   protected
 
     def comment

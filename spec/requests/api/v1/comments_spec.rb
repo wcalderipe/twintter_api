@@ -85,14 +85,14 @@ RSpec.describe 'API V1 Comments', type: :request do
   end
 
   describe 'POST #create' do
-    let(:comment_attributes) { { text: FFaker::Lorem.word } }
-
     before :each do
       post "/api/v1/posts/#{post_record.id}/comments", { comment: comment_attributes },
         'HTTP_AUTHORIZATION' => current_user_credentials
     end
 
     context 'with valid attributes' do
+      let(:comment_attributes) { { text: FFaker::Lorem.word } }
+
       it 'should respond with 201' do
         expect(response.status).to eq(201)
       end
@@ -101,6 +101,77 @@ RSpec.describe 'API V1 Comments', type: :request do
         expect(json).to eq(
           comment: {
             id: Comment.last.id,
+            text: comment_attributes[:text],
+            post: {
+              id: post_record.id
+            }
+          }
+        )
+      end
+    end
+
+    context 'with invalid attributes' do
+      context 'missing text' do
+        let(:comment_attributes) { { text: '' } }
+
+        it 'should respond with 422' do
+          expect(response.status).to eq(422)
+        end
+
+        it 'should render json errors' do
+          expect(json).to eq(
+            error: {
+              message: {
+                text: ["can't be blank"]
+              },
+              class: 'ModelValidationError',
+              status: 422
+            }
+          )
+        end
+      end
+
+      context 'text is too big' do
+        let(:comment_attributes) { { text: 'lorem' * 140 } }
+
+        it 'should respond with 422' do
+          expect(response.status).to eq(422)
+        end
+
+        it 'should render json errors' do
+          expect(json).to eq(
+            error: {
+              message: {
+                text: ['is too long (maximum is 140 characters)']
+              },
+              class: 'ModelValidationError',
+              status: 422
+            }
+          )
+        end
+      end
+    end
+  end
+
+  describe 'PUT #update' do
+    let!(:comment) { create(:comment, post: post_record) }
+
+    before :each do
+      put "/api/v1/posts/#{post_record.id}/comments/#{comment.id}",
+        { comment: comment_attributes }, 'HTTP_AUTHORIZATION' => current_user_credentials
+    end
+
+    context 'with valid attributes' do
+      let!(:comment_attributes) { { text: FFaker::Lorem.word } }
+
+      it 'should respond with 200' do
+        expect(response.status).to eq(200)
+      end
+
+      it 'should render comment json' do
+        expect(json).to eq(
+          comment: {
+            id: comment.id,
             text: comment_attributes[:text],
             post: {
               id: post_record.id

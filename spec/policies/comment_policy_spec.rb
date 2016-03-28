@@ -37,4 +37,25 @@ describe CommentPolicy do
       expect(subject).not_to permit(guest, comment)
     end
   end
+
+  permissions :update? do
+    let!(:post) { create(:post, user: current_user) }
+    let!(:comment) { build(:comment, post: post) }
+
+    it 'grants access to users own comments' do
+      expect(subject).to permit(current_user, comment)
+    end
+
+    it 'grants access to admins' do
+      expect(subject).to permit(admin, comment)
+    end
+
+    it 'denies access to guests' do
+      expect(subject).not_to permit(guest, comment)
+    end
+
+    it 'denies access to users in other users comments' do
+      expect(subject).not_to permit(user, comment)
+    end
+  end
 end
