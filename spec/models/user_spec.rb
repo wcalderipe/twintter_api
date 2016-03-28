@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer          not null, primary key
+#  username               :string           default(""), not null
+#  first_name             :string           default(""), not null
+#  last_name              :string           default(""), not null
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  reset_password_token   :string
+#  reset_password_sent_at :datetime
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  role                   :integer          default("0")
+#
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -23,6 +40,7 @@ RSpec.describe User, type: :model do
   end
 
   context 'associations' do
+    it { should have_many(:posts) }
   end
 
   describe 'role' do

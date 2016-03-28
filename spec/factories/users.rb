@@ -12,6 +12,7 @@
 #  reset_password_sent_at :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  role                   :integer          default("0")
 #
 
 FactoryGirl.define do
