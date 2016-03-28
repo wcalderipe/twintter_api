@@ -38,7 +38,7 @@ describe CommentPolicy do
     end
   end
 
-  permissions :update? do
+  permissions :update?, :destroy? do
     let!(:post) { create(:post, user: current_user) }
     let!(:comment) { build(:comment, post: post) }
 

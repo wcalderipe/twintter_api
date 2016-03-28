@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'API V1 Comments', type: :request do
-  let!(:post_record) { create(:post) }
+  let!(:post_record) { create(:post, user: current_user) }
 
   describe 'GET #index' do
     let!(:comments_collection) { create_list(:comment, 2, post: post_record) }
@@ -221,6 +221,23 @@ RSpec.describe 'API V1 Comments', type: :request do
           )
         end
       end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:comment) { create(:comment, post: post_record) }
+
+    before :each do
+      delete "/api/v1/posts/#{post_record.id}/comments/#{comment.id}", {},
+        'HTTP_AUTHORIZATION' => current_user_credentials
+    end
+
+    it 'should respond with 204' do
+      expect(response.status).to eq(204)
+    end
+
+    it 'should delete post record' do
+      expect { raise comment.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end

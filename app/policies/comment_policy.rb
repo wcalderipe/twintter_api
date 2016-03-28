@@ -7,6 +7,10 @@ class CommentPolicy < ApplicationPolicy
     grant?
   end
 
+  def destroy?
+    grant?
+  end
+
   protected
 
   def grant?

@@ -28,6 +28,12 @@ class Api::V1::CommentsController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    authorize comment
+    comment.destroy
+    head 204
+  end
+
   protected
 
     def comment
