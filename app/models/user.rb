@@ -12,9 +12,12 @@
 #  reset_password_sent_at :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  role                   :integer          default("0")
 #
 
 class User < ActiveRecord::Base
+  has_many :posts
+
   validates :username, :first_name, :last_name, presence: true
   validates :username, uniqueness: true
 
