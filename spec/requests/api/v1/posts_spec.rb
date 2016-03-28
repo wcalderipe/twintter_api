@@ -91,19 +91,19 @@ RSpec.describe 'API V1 Posts', type: :request do
   end
 
   describe 'POST #create' do
+    let(:post_attributes) { { text: FFaker::Lorem.word } }
+
+    before :each do
+      post "/api/v1/users/#{user.id}/posts", { post: post_attributes },
+        'HTTP_AUTHORIZATION' => current_user_credentials
+    end
+
     context 'with valid attributes' do
-      let!(:post_attributes) { { text: FFaker::Lorem.word } }
-
-      before :each do
-        post "/api/v1/users/#{user.id}/posts", { post: post_attributes },
-          'HTTP_AUTHORIZATION' => current_user_credentials
-      end
-
       it 'should respond with 201' do
         expect(response.status).to eq(201)
       end
 
-      it 'should render user json' do
+      it 'should render post json' do
         expect(json).to eq(
           post: {
             id: Post.last.id,
@@ -119,11 +119,6 @@ RSpec.describe 'API V1 Posts', type: :request do
     context 'with invalid attributes' do
       let(:post_attributes) { { text: '' } }
 
-      before :each do
-        post "/api/v1/users/#{user.id}/posts", { post: post_attributes },
-          'HTTP_AUTHORIZATION' => current_user_credentials
-      end
-
       context 'missing text' do
         it 'should respond with 422' do
           expect(response.status).to eq(422)
@@ -134,6 +129,26 @@ RSpec.describe 'API V1 Posts', type: :request do
             error: {
               message: {
                 text: ["can't be blank"]
+              },
+              class: 'ModelValidationError',
+              status: 422
+            }
+          )
+        end
+      end
+
+      context 'text is too big' do
+        let(:post_attributes) { { text: 'lorem' * 140 } }
+
+        it 'should respond with 422' do
+          expect(response.status).to eq(422)
+        end
+
+        it 'should render json errors' do
+          expect(json).to eq(
+            error: {
+              message: {
+                text: ['is too long (maximum is 140 characters)']
               },
               class: 'ModelValidationError',
               status: 422
