@@ -22,7 +22,7 @@ describe PostPolicy do
     end
   end
 
-  permissions :create? do
+  permissions :create?, :update? do
     let!(:post) { build(:post, user: current_user) }
 
     it 'grants access to users' do

@@ -19,6 +19,15 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
   end
 
+  def update
+    authorize post
+    if post.update(post_params)
+      render json: post, status: 200, serializer: ::V1::PostSerializer
+    else
+      fail ModelValidationError.new(post.errors)
+    end
+  end
+
   protected
 
     def post
