@@ -7,6 +7,10 @@ class PostPolicy < ApplicationPolicy
     grant?
   end
 
+  def destroy?
+    grant?
+  end
+
   protected
 
     def grant?

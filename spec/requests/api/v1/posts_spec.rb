@@ -194,5 +194,22 @@ RSpec.describe 'API V1 Posts', type: :request do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    let!(:post) { create(:post, user: current_user) }
+
+    before :each do
+      delete "/api/v1/users/#{current_user.id}/posts/#{post.id}", {},
+        'HTTP_AUTHORIZATION' => current_user_credentials
+    end
+
+    it 'should respond with 204' do
+      expect(response.status).to eq(204)
+    end
+
+    it 'should delete post record' do
+      expect { raise post.reload }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
 end
 

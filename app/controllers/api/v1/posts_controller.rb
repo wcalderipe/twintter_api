@@ -28,6 +28,12 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
   end
 
+  def destroy
+    authorize post
+    post.destroy
+    head 204
+  end
+
   protected
 
     def post
