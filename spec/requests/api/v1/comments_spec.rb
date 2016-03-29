@@ -21,10 +21,28 @@ RSpec.describe 'API V1 Comments', type: :request do
           {
             id: comments_collection[1].id,
             text: comments_collection[1].text,
+            links: {
+              self: api_v1_post_comment_path(post_record.id, comments_collection[1].id)
+            },
+            post: {
+              id: post_record.id,
+              links: {
+                self: api_v1_user_post_path(post_record.user.id, post_record.id)
+              }
+            }
           },
           {
             id: comments_collection[0].id,
             text: comments_collection[0].text,
+            links: {
+              self: api_v1_post_comment_path(post_record.id, comments_collection[0].id)
+            },
+            post: {
+              id: post_record.id,
+              links: {
+                self: api_v1_user_post_path(post_record.user.id, post_record.id)
+              }
+            }
           }
         ],
         meta: {
@@ -54,8 +72,25 @@ RSpec.describe 'API V1 Comments', type: :request do
           comment: {
             id: comment.id,
             text: comment.text,
+            links: {
+              self: api_v1_post_comment_path(post_record.id, comment.id)
+            },
             post: {
-              id: post_record.id
+              id: post_record.id,
+              text: post_record.text,
+              links: {
+                self: api_v1_user_post_path(post_record.user.id, post_record.id)
+              },
+              user: {
+                id: post_record.user.id,
+                username: post_record.user.username,
+                email: post_record.user.email,
+                first_name: post_record.user.first_name,
+                last_name: post_record.user.last_name,
+                links: {
+                  self: api_v1_user_path(post_record.user.id)
+                }
+              }
             }
           }
         )
@@ -102,8 +137,25 @@ RSpec.describe 'API V1 Comments', type: :request do
           comment: {
             id: Comment.last.id,
             text: comment_attributes[:text],
+            links: {
+              self: api_v1_post_comment_path(post_record.id, Comment.last.id)
+            },
             post: {
-              id: post_record.id
+              id: post_record.id,
+              text: post_record.text,
+              links: {
+                self: api_v1_user_post_path(post_record.user.id, post_record.id)
+              },
+              user: {
+                id: post_record.user.id,
+                username: post_record.user.username,
+                email: post_record.user.email,
+                first_name: post_record.user.first_name,
+                last_name: post_record.user.last_name,
+                links: {
+                  self: api_v1_user_path(post_record.user.id)
+                }
+              }
             }
           }
         )
@@ -173,8 +225,25 @@ RSpec.describe 'API V1 Comments', type: :request do
           comment: {
             id: comment.id,
             text: comment_attributes[:text],
+            links: {
+              self: api_v1_post_comment_path(post_record.id, comment.id)
+            },
             post: {
-              id: post_record.id
+              id: post_record.id,
+              text: post_record.text,
+              links: {
+                self: api_v1_user_post_path(post_record.user.id, post_record.id)
+              },
+              user: {
+                id: post_record.user.id,
+                username: post_record.user.username,
+                email: post_record.user.email,
+                first_name: post_record.user.first_name,
+                last_name: post_record.user.last_name,
+                links: {
+                  self: api_v1_user_path(post_record.user.id)
+                }
+              }
             }
           }
         )

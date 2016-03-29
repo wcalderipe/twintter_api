@@ -20,21 +20,30 @@ RSpec.describe 'API V1 Users', type: :request do
             username: users_collection[0].username,
             email: users_collection[0].email,
             first_name: users_collection[0].first_name,
-            last_name: users_collection[0].last_name
+            last_name: users_collection[0].last_name,
+            links: {
+              self: api_v1_user_path(users_collection[0].id)
+            }
           },
           {
             id: users_collection[1].id,
             username: users_collection[1].username,
             email: users_collection[1].email,
             first_name: users_collection[1].first_name,
-            last_name: users_collection[1].last_name
+            last_name: users_collection[1].last_name,
+            links: {
+              self: api_v1_user_path(users_collection[1].id)
+            }
           },
           {
             id: current_user.id,
             username: current_user.username,
             email: current_user.email,
             first_name: current_user.first_name,
-            last_name: current_user.last_name
+            last_name: current_user.last_name,
+            links: {
+              self: api_v1_user_path(current_user.id)
+            }
           }
         ],
         meta: {
@@ -65,7 +74,10 @@ RSpec.describe 'API V1 Users', type: :request do
             username: user.username,
             email: user.email,
             first_name: user.first_name,
-            last_name: user.last_name
+            last_name: user.last_name,
+            links: {
+              self: api_v1_user_path(user.id)
+            }
           }
         )
       end
@@ -112,7 +124,10 @@ RSpec.describe 'API V1 Users', type: :request do
             username: user_attributes[:username],
             email: user_attributes[:email],
             first_name: user_attributes[:first_name],
-            last_name: user_attributes[:last_name]
+            last_name: user_attributes[:last_name],
+            links: {
+              self: api_v1_user_path(User.last.id)
+            }
           }
         )
       end
@@ -250,7 +265,10 @@ RSpec.describe 'API V1 Users', type: :request do
             username: user_attributes[:username],
             email: user_attributes[:email],
             first_name: user_attributes[:first_name],
-            last_name: user_attributes[:last_name]
+            last_name: user_attributes[:last_name],
+            links: {
+              self: api_v1_user_path(user.id)
+            }
           }
         )
       end

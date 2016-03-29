@@ -21,16 +21,36 @@ RSpec.describe 'API V1 Posts', type: :request do
           {
             id: posts_collection[1].id,
             text: posts_collection[1].text,
+            links: {
+              self: api_v1_user_post_path(user.id, posts_collection[1].id)
+            },
             user: {
-              id: user.id
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              links: {
+                self: api_v1_user_path(user.id)
+              }
             }
           },
           {
             id: posts_collection[0].id,
             text: posts_collection[0].text,
+            links: {
+              self: api_v1_user_post_path(user.id, posts_collection[0].id)
+            },
             user: {
-              id: user.id
-            }
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              links: {
+                self: api_v1_user_path(user.id)
+              }
+            },
           }
         ],
         meta: {
@@ -60,8 +80,18 @@ RSpec.describe 'API V1 Posts', type: :request do
           post: {
             id: post.id,
             text: post.text,
+            links: {
+              self: api_v1_user_post_path(user.id, post.id)
+            },
             user: {
-              id: user.id
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              links: {
+                self: api_v1_user_path(user.id)
+              }
             }
           }
         )
@@ -108,8 +138,18 @@ RSpec.describe 'API V1 Posts', type: :request do
           post: {
             id: Post.last.id,
             text: post_attributes[:text],
+            links: {
+              self: api_v1_user_post_path(user.id, Post.last.id)
+            },
             user: {
-              id: user.id
+              id: user.id,
+              username: user.username,
+              email: user.email,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              links: {
+                self: api_v1_user_path(user.id)
+              }
             }
           }
         )
@@ -179,8 +219,18 @@ RSpec.describe 'API V1 Posts', type: :request do
           post: {
             id: post.id,
             text: post_attributes[:text],
+            links: {
+              self: api_v1_user_post_path(current_user.id, post.id)
+            },
             user: {
-              id: current_user.id
+              id: current_user.id,
+              username: current_user.username,
+              email: current_user.email,
+              first_name: current_user.first_name,
+              last_name: current_user.last_name,
+              links: {
+                self: api_v1_user_path(current_user.id)
+              }
             }
           }
         )
