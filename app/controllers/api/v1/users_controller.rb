@@ -1,6 +1,4 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  after_action :verify_authorized
-
   def index
     authorize User
     render_collection(users, ::V1::UserSerializer)

@@ -26,7 +26,13 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Pundit::NotAuthorizedError do |e|
-    fail NotAuthorizedError.new
+    render json: {
+      error: {
+        message: 'Not authorized',
+        class: e.class.name,
+        status: 403
+      }
+    }, status: 403
   end
 
   private

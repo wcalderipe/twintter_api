@@ -15,8 +15,12 @@ module Request
     end
 
     def current_user_credentials
+      encode_credentials(current_user)
+    end
+
+    def encode_credentials(user)
       ActionController::HttpAuthentication::Basic.encode_credentials(
-        current_user.username, 'password')
+        user.username, 'password')
     end
   end
 end

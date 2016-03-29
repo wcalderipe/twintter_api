@@ -11,7 +11,7 @@ describe 'API Errors', type: :request do
     end
   end
 
-  context 'Not found resource' do
+  context 'not found resource' do
     describe 'GET /lorem' do
       before :each do
         get '/lorem'
@@ -60,6 +60,30 @@ describe 'API Errors', type: :request do
       it 'should respond with 404' do
         expect(response.status).to eq(404)
       end
+    end
+  end
+
+  describe 'not authorized' do
+    let!(:guest) { create(:user, role: :guest) }
+    let(:post_attributes) { { text: FFaker::Lorem.word } }
+
+    before :each do 
+      post "/api/v1/users/#{guest.id}/posts", { post: post_attributes },
+        'HTTP_AUTHORIZATION' => encode_credentials(guest)
+    end
+
+    it 'should respond with 403' do
+      expect(response.status).to eq(403)
+    end
+
+    it 'should render error json' do
+      expect(json).to eq(
+        error: {
+          message: "Not authorized",
+          class: 'Pundit::NotAuthorizedError',
+          status: 403
+        }
+      )
     end
   end
 end
