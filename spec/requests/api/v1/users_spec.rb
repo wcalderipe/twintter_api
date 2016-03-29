@@ -21,6 +21,7 @@ RSpec.describe 'API V1 Users', type: :request do
             email: users_collection[0].email,
             first_name: users_collection[0].first_name,
             last_name: users_collection[0].last_name,
+            post_ids: users_collection[0].posts.map { |post| post.id },
             links: {
               self: api_v1_user_path(users_collection[0].id)
             }
@@ -31,6 +32,7 @@ RSpec.describe 'API V1 Users', type: :request do
             email: users_collection[1].email,
             first_name: users_collection[1].first_name,
             last_name: users_collection[1].last_name,
+            post_ids: users_collection[1].posts.map { |post| post.id },
             links: {
               self: api_v1_user_path(users_collection[1].id)
             }
@@ -41,6 +43,7 @@ RSpec.describe 'API V1 Users', type: :request do
             email: current_user.email,
             first_name: current_user.first_name,
             last_name: current_user.last_name,
+            post_ids: current_user.posts.map { |post| post.id },
             links: {
               self: api_v1_user_path(current_user.id)
             }
@@ -75,6 +78,7 @@ RSpec.describe 'API V1 Users', type: :request do
             email: user.email,
             first_name: user.first_name,
             last_name: user.last_name,
+            post_ids: user.posts.map { |post| post.id },
             links: {
               self: api_v1_user_path(user.id)
             }
@@ -125,6 +129,7 @@ RSpec.describe 'API V1 Users', type: :request do
             email: user_attributes[:email],
             first_name: user_attributes[:first_name],
             last_name: user_attributes[:last_name],
+            post_ids: User.last.posts.map { |post| post.id },
             links: {
               self: api_v1_user_path(User.last.id)
             }
@@ -266,6 +271,7 @@ RSpec.describe 'API V1 Users', type: :request do
             email: user_attributes[:email],
             first_name: user_attributes[:first_name],
             last_name: user_attributes[:last_name],
+            post_ids: user.posts.map { |post| post.id },
             links: {
               self: api_v1_user_path(user.id)
             }

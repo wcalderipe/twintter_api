@@ -31,6 +31,7 @@ RSpec.describe 'API V1 Posts', type: :request do
               email: user.email,
               first_name: user.first_name,
               last_name: user.last_name,
+              post_ids: user.posts.map { |post| post.id },
               links: {
                 self: api_v1_user_path(user.id)
               }
@@ -49,6 +50,7 @@ RSpec.describe 'API V1 Posts', type: :request do
               email: user.email,
               first_name: user.first_name,
               last_name: user.last_name,
+              post_ids: user.posts.map { |post| post.id },
               links: {
                 self: api_v1_user_path(user.id)
               }
@@ -92,6 +94,7 @@ RSpec.describe 'API V1 Posts', type: :request do
               email: user.email,
               first_name: user.first_name,
               last_name: user.last_name,
+              post_ids: user.posts.map { |post| post.id },
               links: {
                 self: api_v1_user_path(user.id)
               }
@@ -151,6 +154,7 @@ RSpec.describe 'API V1 Posts', type: :request do
               email: user.email,
               first_name: user.first_name,
               last_name: user.last_name,
+              post_ids: user.posts.map { |post| post.id },
               links: {
                 self: api_v1_user_path(user.id)
               }
@@ -233,6 +237,7 @@ RSpec.describe 'API V1 Posts', type: :request do
               email: current_user.email,
               first_name: current_user.first_name,
               last_name: current_user.last_name,
+              post_ids: current_user.posts.map { |post| post.id },
               links: {
                 self: api_v1_user_path(current_user.id)
               }
