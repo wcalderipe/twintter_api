@@ -79,9 +79,33 @@ describe 'API Errors', type: :request do
     it 'should render error json' do
       expect(json).to eq(
         error: {
-          message: "Not authorized",
+          message: 'Not authorized',
           class: 'Pundit::NotAuthorizedError',
           status: 403
+        }
+      )
+    end
+  end
+
+  describe 'not authenticated' do
+    let!(:guest) do
+      create(:user, role: :guest, password: '123123123', 
+        password_confirmation: '123123123')
+    end
+
+    before :each do
+      get '/api/v1/users', {}, 'HTTP_AUTHORIZATION' => encode_credentials(guest)
+    end
+
+    it 'should respond with 401' do
+      expect(response.status).to eq(401)
+    end
+
+    it 'should render error json' do
+      expect(json).to eq(
+        error: {
+          message: ['Not authenticated'],
+          status: 401
         }
       )
     end

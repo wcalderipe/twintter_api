@@ -14,8 +14,17 @@ module HttpAuthenticable
       if current_user
         true
       else
-        render json: { errors: ['Not authenticated'], status: 401 }, status: 401
+        render json: not_authenticated_json, status: 401
       end
     end
+  end
+
+  def not_authenticated_json
+    {
+      error: {
+        message: ['Not authenticated'],
+        status: 401
+      }
+    }
   end
 end
