@@ -1,0 +1,7 @@
+user = User.find_by(username: 'user')
+Post.create(text: '1 lorem ipsum dolor', user: user)
+Post.create(text: '2 lorem ipsum dolor', user: user)
+Post.create(text: '3 lorem ipsum dolor', user: user)
+Post.create(text: '4 lorem ipsum dolor', user: user)
+Post.create(text: '5 lorem ipsum dolor', user: user)
+Post.create(text: '6 lorem ipsum dolor', user: user)
