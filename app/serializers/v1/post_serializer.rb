@@ -1,5 +1,5 @@
 class V1::PostSerializer < ActiveModel::Serializer
-  attributes :id, :text, :links, :user
+  attributes :id, :text, :comment_ids, :links, :user
 
   def links
     { self: api_v1_user_post_path(object.user.id, object.id) }

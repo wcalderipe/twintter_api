@@ -21,6 +21,7 @@ RSpec.describe 'API V1 Posts', type: :request do
           {
             id: posts_collection[1].id,
             text: posts_collection[1].text,
+            comment_ids: posts_collection[1].comments.map { |comment| comment.id},
             links: {
               self: api_v1_user_post_path(user.id, posts_collection[1].id)
             },
@@ -38,6 +39,7 @@ RSpec.describe 'API V1 Posts', type: :request do
           {
             id: posts_collection[0].id,
             text: posts_collection[0].text,
+            comment_ids: posts_collection[0].comments.map { |comment| comment.id},
             links: {
               self: api_v1_user_post_path(user.id, posts_collection[0].id)
             },
@@ -80,6 +82,7 @@ RSpec.describe 'API V1 Posts', type: :request do
           post: {
             id: post.id,
             text: post.text,
+            comment_ids: post.comments.map { |comment| comment.id},
             links: {
               self: api_v1_user_post_path(user.id, post.id)
             },
@@ -138,6 +141,7 @@ RSpec.describe 'API V1 Posts', type: :request do
           post: {
             id: Post.last.id,
             text: post_attributes[:text],
+            comment_ids: Post.last.comments.map { |comment| comment.id},
             links: {
               self: api_v1_user_post_path(user.id, Post.last.id)
             },
@@ -219,6 +223,7 @@ RSpec.describe 'API V1 Posts', type: :request do
           post: {
             id: post.id,
             text: post_attributes[:text],
+            comment_ids: post.comments.map { |comment| comment.id},
             links: {
               self: api_v1_user_post_path(current_user.id, post.id)
             },

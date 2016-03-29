@@ -78,6 +78,7 @@ RSpec.describe 'API V1 Comments', type: :request do
             post: {
               id: post_record.id,
               text: post_record.text,
+              comment_ids: post_record.comments.map { |comment| comment.id},
               links: {
                 self: api_v1_user_post_path(post_record.user.id, post_record.id)
               },
@@ -143,6 +144,7 @@ RSpec.describe 'API V1 Comments', type: :request do
             post: {
               id: post_record.id,
               text: post_record.text,
+              comment_ids: post_record.comments.map { |comment| comment.id},
               links: {
                 self: api_v1_user_post_path(post_record.user.id, post_record.id)
               },
@@ -231,6 +233,7 @@ RSpec.describe 'API V1 Comments', type: :request do
             post: {
               id: post_record.id,
               text: post_record.text,
+              comment_ids: post_record.comments.map { |comment| comment.id},
               links: {
                 self: api_v1_user_post_path(post_record.user.id, post_record.id)
               },
